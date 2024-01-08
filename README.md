@@ -1,10 +1,14 @@
 # parcel-starter
 Parcel JS quick starter project with GitHub Pages Actions for JS PoC quick start prototyping
 
-## Getting started
+## Getting started / bun
+
+Install bun:
 
 ```bash
-npm_config_yes=true npx degit daggerok/parcel-starter my-app
+curl -fsSL https://bun.sh/install | bash
+bun -v # 1.0.21
+bunx degit daggerok/parcel-starter my-app
 ```
 
 ## Development
@@ -12,31 +16,31 @@ npm_config_yes=true npx degit daggerok/parcel-starter my-app
 install packages:
 
 ```bash
-npm i -E
+bun i -E
 ```
 
 run server in dev mode listening port 1234:
 
 ```bash
-npm run serve
+bun serve
 ```
 
 run tests:
 
 ```bash
-npm t
+bun test
 ```
 
 run tests in watch mode:
 
 ```bash
-npm run dev
+bun dev
 ```
 
 build and run locally listening port 3000:
 
 ```bash
-npm run build ; npm_config_yes=true npx serve dist
+bun run build ; bunx serve dist
 ```
 
 ## Deployment
