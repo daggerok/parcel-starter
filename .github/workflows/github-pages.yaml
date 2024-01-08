@@ -18,9 +18,6 @@ jobs:
       || !startsWith(github.event.inputs.trigger, 'm')
       || !startsWith(github.event.inputs.trigger, 'M')
     needs: bun
-    environment:
-      name: ci
-      url: ${{ steps.deployment.outputs.page_url }}
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
