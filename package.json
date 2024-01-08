@@ -1,7 +1,7 @@
 {
-  "name": "parcel-starter",
+  "name": "parcel-p-react-starter",
   "version": "1.0.0",
-  "description": "Parcel JS quick starter project with GitHub Pages Actions for JS PoC quick start prototyping",
+  "description": "Bun Parcel (P)ReactJS quick starter project with GitHub Pages Actions for JS PoC quick start prototyping",
   "source": "src/index.html",
   "scripts": {
     "clean": "rimraf -rf dist .parcel-cache",
@@ -15,7 +15,8 @@
     "stop": "pm2 kill",
     "logs": "pm2 logs",
     "test": "jest src",
-    "dev": "npm run test -- --watchAll"
+    "test:dev": "npm run test -- --watchAll",
+    "dev": "parcel --no-cache --no-source-maps"
   },
   "keywords": [
     "parcel",
@@ -32,7 +33,13 @@
     "jest": "29.7.0",
     "parcel": "2.11.0",
     "pm2": "5.3.0",
+    "process": "^0.11.10",
     "rimraf": "5.0.1",
     "scss": "0.2.4"
+  },
+  "dependencies": {
+    "@preact/signals-react": "2.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
