@@ -8,24 +8,56 @@ on:
         default: ''
   pull_request:
   push:
-env:
-  NODE_VERSION: 19.7.0
 jobs:
-  tests:
+  bun:
+    uses: ./.github/workflows/bun.yml
+  bunx-npm-check-updates-u:
     if: github.event.inputs.trigger == ''
       || !startsWith(github.event.inputs.trigger, 'm')
       || !startsWith(github.event.inputs.trigger, 'M')
+    needs: bun
+    environment:
+      name: ci
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-    - uses: actions/cache@v3
-      id: cache
-      with:
-        path: |
-          ~/.n*
-        key: ${{ runner.os }}-${{ hashFiles('**/package.json', '**/package-lock.json') }}
-    - run: npm i -E
-    - run: npm t
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - uses: actions/cache@v3
+        id: ci
+        with:
+          path: |
+            !~/.m2
+            ~/.bun
+            ~/.npm
+            ~/.node
+          key: ${{ runner.os }}-${{ hashFiles('**/workflows/*.yml', '**/package.json') }}
+      - run: echo "${{ needs.bun.outputs.BUN_BIN }}" >> "$GITHUB_PATH"
+      - run: bunx npm-check-updates -u
+  test:
+    if: github.event.inputs.trigger == ''
+      || !startsWith(github.event.inputs.trigger, 'm')
+      || !startsWith(github.event.inputs.trigger, 'M')
+    needs: bun
+    environment:
+      name: ci
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - uses: actions/cache@v3
+        id: ci
+        with:
+          path: |
+            !~/.m2
+            ~/.bun
+            ~/.npm
+            ~/.node
+          key: ${{ runner.os }}-${{ hashFiles('**/workflows/*.yml', '**/package.json') }}
+      - run: echo "${{ needs.bun.outputs.BUN_BIN }}" >> "$GITHUB_PATH"
+      - run: bun i -E
+      - run: bun run test
+      - run: bun test
