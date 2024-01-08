@@ -1,6 +1,11 @@
 # parcel-starter
 Parcel JS quick starter project with GitHub Pages Actions for JS PoC quick start prototyping
 
+See also:
+
+* [Bun parcel (P)React signals](https://github.com/daggerok/parcel-starter/tree/parcel-p-react-signals)
+* [Bun parcel (P)React signals TypeScrip](https://github.com/daggerok/parcel-starter/tree/parcel-react-typescript)
+
 ## Getting started / bun
 
 Install bun:
