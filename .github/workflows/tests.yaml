@@ -11,14 +11,11 @@ on:
 jobs:
   bun:
     uses: ./.github/workflows/bun.yml
-  bunx-npm-check-updates-u:
+  bunx-npm-check-updates:
     if: github.event.inputs.trigger == ''
       || !startsWith(github.event.inputs.trigger, 'm')
       || !startsWith(github.event.inputs.trigger, 'M')
     needs: bun
-    environment:
-      name: ci
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -34,7 +31,7 @@ jobs:
             ~/.node
           key: ${{ runner.os }}-${{ hashFiles('**/workflows/*.yml', '**/package.json') }}
       - run: echo "${{ needs.bun.outputs.BUN_BIN }}" >> "$GITHUB_PATH"
-      - run: bunx npm-check-updates -u
+      - run: bunx npm-check-updates
   test:
     if: github.event.inputs.trigger == ''
       || !startsWith(github.event.inputs.trigger, 'm')
@@ -61,3 +58,6 @@ jobs:
       - run: bun i -E
       - run: bun run test
       - run: bun test
+      - run: bun start
+      - run: bunx wait-port 1234
+      - run: curl 0:1234/
